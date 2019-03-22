@@ -14,6 +14,23 @@ def read_yaml(filepath):
     document = open(filepath, 'r')
     return yaml.load(document,Loader=yaml.FullLoader)
 
+def clean_data(df):
+    # replace "?" to NaN
+    df = df.replace("?", np.nan, inplace=True)
+    return df
+
+
+def treat_null_values(df):
+
+    missing_data = df.isnull()
+    missing_data.head(5)
+
+    for column in missing_data.columns.values.tolist():
+        print(column)
+        print (missing_data[column].value_counts())
+        print("")
+
+
 def main():
     current_dir=os.path.dirname(os.path.abspath(__file__))
 
@@ -31,6 +48,7 @@ def main():
 
     features.describe()
 
+    features = clean_data(features)
 
 
 
